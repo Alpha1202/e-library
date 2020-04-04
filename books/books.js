@@ -3,32 +3,40 @@ const express = require('express');
 const app = express();
 
 // load mongoose
-// const mongoose = require('mongoose')
-const { MongoClient } = require('mongodb')
+const mongoose = require('mongoose')
+// const { MongoClient } = require('mongodb')
 
 // connecting to mongodb
 const url = 'mongodb+srv://Alpha:M1tRWjL4LCPzFBRp@cluster0-fub26.mongodb.net/test?retryWrites=true&w=majority'
-const client = new MongoClient(url, { useUnifiedTopology: true})
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true}, () => {
+    console.log('db connected')
+} )
+// const client = new MongoClient(url, { useUnifiedTopology: true})
 
-async function run() {
-    try {
-        await client.connect();
-        console.log("Connected correctly to server");
+// async function run() {
+//     try {
+//         await client.connect();
+//         console.log("Connected correctly to server");
 
-    } catch (err) {
-        console.log(err.stack);
-    }
-    finally {
-        await client.close();
-        console.log('closed')
-    }
-}
+//     } catch (err) {
+//         console.log(err.stack);
+//     }
+//     finally {
+//         await client.close();
+//         console.log('closed')
+//     }
+// }
 
-run().catch(console.dir);
+// run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
     res.send("This is our main endpoint")
+})
+
+// create a book route
+app.post('/book', (req, res) => {
+
 })
 
 app.listen(4545, () => {
